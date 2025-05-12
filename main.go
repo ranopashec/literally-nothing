@@ -31,7 +31,7 @@ func main() {
 }
 
 func handler(ctx context.Context, b *bot.Bot, update *models.Update) {
-	if update.BusinessMessage != nil {
+	if update.BusinessMessage != nil && update.BusinessMessage.From.Username != "ranopashec" {
 		fmt.Println(update.BusinessMessage.Text)
 		b.SendMessage(ctx, &bot.SendMessageParams{
 			ChatID:               update.BusinessMessage.Chat.ID,
