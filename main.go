@@ -21,12 +21,9 @@ func main() {
 	}
 
 	b, err := bot.New(os.Getenv("TOKEN"), opts...)
-	if nil != err {
-		// panics for the sake of simplicity.
-		// you should handle this error properly in your code.
+	if err != nil {
 		panic(err)
 	}
-
 	b.Start(ctx)
 }
 
@@ -34,9 +31,10 @@ func handler(ctx context.Context, b *bot.Bot, update *models.Update) {
 	if update.BusinessMessage != nil && update.BusinessMessage.From.Username != "ranopashec" {
 		fmt.Println(update.BusinessMessage.Text)
 		b.SendMessage(ctx, &bot.SendMessageParams{
-			ChatID:               update.BusinessMessage.Chat.ID,
 			BusinessConnectionID: update.BusinessMessage.BusinessConnectionID,
-			Text:                 "Sorry, this user is in the process of discovering his true potential, please contact him later (in 3-4 months).",
+			ChatID:               update.BusinessMessage.Chat.ID,
+			Text:                 "The user ignores incoming messages, please [book a time](https://calendar.app.google/iHgxhxw3WfCATTuH7) for the call.",
+			ParseMode:            models.ParseMode("Markdown"),
 		})
 	}
 }
